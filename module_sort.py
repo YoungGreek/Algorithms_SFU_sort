@@ -50,6 +50,9 @@ def polyphase_sort(src: list, file_format: str, output: str, reverse: bool, key:
     else:
         output_file = [output]
 
+    if pathlib.Path(output_file[0]).suffix.lower() == '':
+        output_file[0] = output_file[0] + "." + file_format
+
     if file_format == 'txt':
         write_result_to_file_txt(result, output_file)
     else:
