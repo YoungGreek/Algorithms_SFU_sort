@@ -1,15 +1,12 @@
-import pathlib
-from typing import Union
-
 SUPPORTED_FORMATS = ('.csv', '.txt')
 
 
-def get_format(file_path: Union[str, pathlib.Path]) -> str:
+def check_format(file_format) -> str:
     """
-    Определяет формат файла по его расширению.
+    Проверяет формат файла.
 
     Args:
-        file_path: путь к файлу (str или pathlib.Path).
+        file_format: формат файла (расширение имени файла)
 
     Returns:
         Строка 'csv' или 'txt'.
@@ -17,7 +14,12 @@ def get_format(file_path: Union[str, pathlib.Path]) -> str:
     Raises:
         ValueError: если формат файла не поддерживается.
     """
-    extension = pathlib.Path(file_path).suffix.lower()
+
+    extension = file_format
+
+    if file_format[0] != ".":
+        extension = "." + file_format
+
     if extension not in SUPPORTED_FORMATS:
 
         raise ValueError(

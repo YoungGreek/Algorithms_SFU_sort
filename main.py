@@ -12,7 +12,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Многофазная (фибоначчиева) внешняя сортировка txt/csv файлов.")
     parser.add_argument("-s", "--source",
-                        help="исходный файл (txt или csv)")
+                        help="исходный файл", required=True)
+    parser.add_argument("-f", "--format",
+                        help="формат файла (csv, txt)", required=True)
     parser.add_argument("-o", "--output",
                         help="выходной файл")
     parser.add_argument("-r", "--reverse", action="store_true",
@@ -31,6 +33,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     file_path = [args.source]
+    file_format = args.format
     output_file = args.output
     if output_file is None:
         output_file = ""
@@ -38,4 +41,4 @@ if __name__ == "__main__":
     key = args.key
     type_data = args.type
 
-    polyphase_sort(file_path, output_file,  reverse, key, type_data)
+    polyphase_sort(file_path, file_format, output_file,  reverse, key, type_data)

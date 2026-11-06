@@ -1,15 +1,17 @@
 from module_files_helper import *
+import pathlib
 
 N_SEQUENCES = 3   # Всего последовательностей: f1, f2 — входные, f3 — выходная
 N_INPUTS = N_SEQUENCES - 1
 
 
-def polyphase_sort(src: list, output: str, reverse: bool, key: str, type_data: str) -> None:
+def polyphase_sort(src: list, file_format: str, output: str, reverse: bool, key: str, type_data: str) -> None:
     """
     Функция - диспетчер, принимает данные из файла, передает в обработку, передает на вывод.
 
     Args:
         src: список с путём к исходному файлу.
+        file_format: формат файла (расширение имени файла)
         output: строка с путём к файлу результата.
         reverse: False — по неубыванию, True — по невозрастанию.
         key: имя колонки для csv (игнорируется для txt).
@@ -20,7 +22,9 @@ def polyphase_sort(src: list, output: str, reverse: bool, key: str, type_data: s
             key не найдена в заголовке csv.
     """
 
-    file_format = get_format(src[0])
+    file_format = check_format(file_format)
+    if pathlib.Path(src[0]).suffix.lower() == '':
+        src[0] = src[0] + "." + file_format
 
     names, rows, n = None, None, None
     if file_format == 'txt':
